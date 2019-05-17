@@ -23,3 +23,6 @@ require github.com/Icepo/aes_ext v1.0.0
 
 * iv 位数要求 128
 
+### update
+* v1.1.0    支持ECB模式
+

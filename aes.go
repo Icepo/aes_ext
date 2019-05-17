@@ -20,6 +20,26 @@ func NewCryptor(key, iv []byte) *cryptor {
 	}
 }
 
+func (a *cryptor) EncryptECB(data []byte) []byte {
+	block, err := aes.NewCipher(a.key)
+	CheckErr(err)
+	content := padding(data, block.BlockSize())
+	encrypted := make([]byte, len(content))
+	CheckErr(err)
+	blockMode := NewECBEncrypter(block)
+	blockMode.CryptBlocks(encrypted, content)
+	return encrypted
+}
+
+func (a *cryptor) DecryptECB(src []byte) []byte {
+	decrypted := make([]byte, len(src))
+	block, err := aes.NewCipher(a.key)
+	CheckErr(err)
+	blockMode := NewECBDecrypter(block)
+	blockMode.CryptBlocks(decrypted, src)
+	return unPadding(decrypted)
+}
+
 func (a *cryptor) Encrypt(data []byte) []byte {
 	block, err := aes.NewCipher(a.key)
 	CheckErr(err)

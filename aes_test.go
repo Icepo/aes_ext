@@ -15,3 +15,13 @@ func TestCryptor_Encrypt(t *testing.T) {
 	newStr := cryptor.Decrypt(enc)
 	t.Log(string(newStr))
 }
+
+func TestCryptor_EncryptECB(t *testing.T) {
+	str := "哈哈哈哈"
+	key := "1234567890123456"
+	cryptor := NewCryptor([]byte(key), nil)
+	enc := cryptor.EncryptECB([]byte(str))
+	t.Log(base64.StdEncoding.EncodeToString(enc))
+	newStr := cryptor.DecryptECB(enc)
+	t.Log(string(newStr))
+}
